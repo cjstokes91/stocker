@@ -12,7 +12,7 @@ class StockRow extends Component {
 
     applyData = (data) => {
         this.setState({
-            data: data[data.length - 1]
+            data: data
         })
     }
 
@@ -24,9 +24,9 @@ class StockRow extends Component {
         return (
             <tr>
                 <td>{this.props.ticker}</td>
-                <td>{this.state.data.close}</td>
+                <td>{this.state.data.price}</td>
                 <td>{this.state.data.date}</td>
-                <td>{this.state.data.label}</td>
+                <td>{this.state.data.time}</td>
             </tr>
         )
     }
