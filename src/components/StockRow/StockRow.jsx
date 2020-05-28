@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import iex from '../API/iex';
+import { iex } from '../API/iex';
 
 
 class StockRow extends Component {
@@ -15,18 +15,20 @@ class StockRow extends Component {
         fetch(url)
             .then((response) => response.json())
             .then((data) => {
+                console.log(data)
                 this.setState({
-                    data: data
+                    data: data[data.length - 1]
                 })
+
             })
     }
     render() {
         return (
             <tr>
-                <td>hh</td>
-                <td>hh</td>
-                <td>hh</td>
-                <td>hh</td>
+                <td>{this.props.ticker}</td>
+                <td>{this.state.data.close}</td>
+                <td>{this.state.data.date}</td>
+                <td>{this.state.data.label}</td>
             </tr>
         )
     }
