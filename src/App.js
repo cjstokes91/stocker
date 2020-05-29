@@ -6,22 +6,16 @@ function App() {
   return (
     <div className='App'>
       <div className='container'>
-        <table className='table mt-5'>
-          <thead>
-            <tr>
-              <th>Ticker</th>
-              <th>Price</th>
-              <th>Date</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <StockRow ticker='aapl' />
-            <StockRow ticker='googl' />
-            <StockRow ticker='msft' />
-            <StockRow ticker='tsla' />
-          </tbody>
-        </table>
+        <div className='col-md-5 mt-5'>
+          <div className='card'>
+            <ul className='list-group list-group-flush'>
+              <StockRow ticker='aapl' />
+              <StockRow ticker='googl' />
+              <StockRow ticker='msft' />
+              <StockRow ticker='tsla' />
+            </ul>
+          </div>
+        </div>
       </div>
     </div >
 
