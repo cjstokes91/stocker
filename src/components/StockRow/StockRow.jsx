@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { stock } from '../Stock/Stock.jsx';
 
-const changeStyle = {
-    color: '#4caf50',
-    fontSize: '0.8rem',
-    marginLeft: 5
-}
 
 class StockRow extends Component {
     constructor(props) {
@@ -18,6 +13,14 @@ class StockRow extends Component {
             percent_Change: null
         }
     }
+    changeStyle = () => {
+        return {
+            color: (this.state.dollar_Change > 0) ? '#4caf50' : '#e53935',
+            fontSize: '0.8rem',
+            marginLeft: 6
+        }
+    }
+
 
     applyData = (data) => {
         console.log(data)
@@ -25,6 +28,14 @@ class StockRow extends Component {
             price: data.price,
             date: data.date,
             time: data.time,
+        })
+        stock.getYesterdaysClose(this.props.ticker, data.date, (yesterdayData) => {
+            const dollar_Change = (data.price - yesterdayData.price).toFixed(2);
+            const percent_Change = (100 * dollar_Change / yesterdayData.price).toFixed(1);
+            this.setState({
+                dollar_Change: `${dollar_Change}`,
+                percent_Change: `${percent_Change}%`
+            })
         })
     }
 
@@ -36,9 +47,10 @@ class StockRow extends Component {
         return (
             <li className='list-group-item'>
                 <b>{this.props.ticker}</b>${this.state.price}
-                <span className='change' style={changeStyle}>+12.34</span>
-                {this.state.dollar_Change}
-                {this.state.percent_Change}
+                <span className='change' style={this.changeStyle()} >
+                    {this.state.dollar_Change}
+                    {this.state.percent_Change}
+                </span>
             </li>
 
         )
