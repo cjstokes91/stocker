@@ -11,13 +11,20 @@ class StockRow extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: {}
+            price: null,
+            date: null,
+            time: null,
+            dollar_Change: null,
+            percent_Change: null
         }
     }
 
     applyData = (data) => {
+        console.log(data)
         this.setState({
-            data: data
+            price: data.price,
+            date: data.date,
+            time: data.time,
         })
     }
 
@@ -28,9 +35,12 @@ class StockRow extends Component {
     render() {
         return (
             <li className='list-group-item'>
-                <b>{this.props.ticker}</b>${this.state.data.price}
+                <b>{this.props.ticker}</b>${this.state.price}
                 <span className='change' style={changeStyle}>+12.34</span>
+                {this.state.dollar_Change}
+                {this.state.percent_Change}
             </li>
+
         )
     }
 }
