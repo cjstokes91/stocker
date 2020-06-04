@@ -20,27 +20,29 @@ class StockRow extends Component {
             marginLeft: 6
         }
     }
-
-
     applyData = (data) => {
-        console.log(data)
+        const formattedPrice = (data.price === undefined) ? null : data.price.toFixed(2)
         this.setState({
-            price: data.price,
+            price: formattedPrice,
             date: data.date,
             time: data.time,
-        })
-        stock.getYesterdaysClose(this.props.ticker, data.date, (yesterdayData) => {
-            const dollar_Change = (data.price - yesterdayData.price).toFixed(2);
-            const percent_Change = (100 * dollar_Change / yesterdayData.price).toFixed(1);
-            this.setState({
-                dollar_Change: `${dollar_Change}`,
-                percent_Change: `${percent_Change}%`
-            })
         })
     }
 
     componentDidMount() {
         stock.latestPrice(this.props.ticker, this.applyData)
+    }
+    componentDidUpdate(prevProps) {
+        if (prevProps == null) {
+            stock.getYesterdaysClose(this.props.ticker, this.props.lastTradingDate, (yesterdayData) => {
+                const dollar_Change = (this.state.price - yesterdayData.price).toFixed(2);
+                const percent_Change = (100 * dollar_Change / yesterdayData.price).toFixed(1);
+                this.setState({
+                    dollar_Change: `${dollar_Change}`,
+                    percent_Change: `${percent_Change}%`
+                })
+            })
+        }
     }
 
     render() {
